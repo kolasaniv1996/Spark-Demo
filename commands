@@ -1,0 +1,32 @@
+finetuning a gpt2 using sparkjob having its finetuning script in pvc mounted at /home/local/data
+
+
+  ./spark/bin/spark-submit --master k8s://https://csit-spark.runailabs-cs.com:6443 \
+--deploy-mode cluster \
+--name gpt2-fine-tuning \
+--conf spark.executor.instances=3 \
+--conf spark.executor.resource.gpu.amount=1 \
+--conf spark.executor.memory=4G \
+--conf spark.executor.cores=1 \
+--conf spark.task.cpus=1 \
+--conf spark.task.resource.gpu.amount=1 \
+--conf spark.rapids.memory.pinnedPool.size=2G \
+--conf spark.executor.memoryOverhead=3G \
+--conf spark.sql.files.maxPartitionBytes=512m \
+--conf spark.sql.shuffle.partitions=10 \
+--conf spark.plugins=com.nvidia.spark.SQLPlugin \
+--conf spark.kubernetes.namespace=runai-spark-demo \
+--conf spark.kubernetes.driver.pod.name=gpt2-fine-tune-driver \
+--conf spark.executor.resource.gpu.discoveryScript=/opt/sparkRapidsPlugin/getGpusResources.sh \
+--conf spark.executor.resource.gpu.vendor=nvidia.com \
+--conf spark.kubernetes.container.image=vivekkolasani1996/csit:3.8 \
+--conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+--conf spark.executor.extraClassPath=/opt/sparkRapidsPlugin/rapids-4-spark_2.12-23.06.0.jar \
+--conf spark.driver.extraClassPath=/opt/sparkRapidsPlugin/rapids-4-spark_2.12-23.06.0.jar \
+--conf spark.kubernetes.scheduler.name=runai-scheduler \
+--conf spark.kubernetes.driver.volumes.persistentVolumeClaim.pvc.mount.path=/home/local/data \
+--conf spark.kubernetes.driver.volumes.persistentVolumeClaim.pvc.options.claimName=pvc-project-coln6 \
+--conf spark.kubernetes.executor.volumes.persistentVolumeClaim.pvc.mount.path=/home/local/data \
+--conf spark.kubernetes.executor.volumes.persistentVolumeClaim.pvc.options.claimName=pvc-project-coln6 \
+--driver-memory 6G \
+local:///home/local/data/gpt2_fine_tuning.py
