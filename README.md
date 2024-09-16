@@ -16,20 +16,9 @@ Download the GPU discovery script
 wget https://raw.githubusercontent.com/apache/spark/master/examples/src/main/scripts/getGpusResources.sh
 
 Download the dockerfile needed to build the image
+You can use the dockerfile from this repo
 
-Downloaded dockerfile.cuda https://nvidia.github.io/spark-rapids/docs/get-started/Dockerfile.cuda 
 
-In your directory you should have:
-
-the .jar file from step 2
-
-the GPU discover script from step 3
-
-dockerfile.cuda from step 4
-
-the folder of the untarred content from step 1 
-
-Modify the dockerfile.cuda file to change the image that it is built FROM, the image that the dockerfile comes with does not exist anymore; additionally add the ARG DEBIAN_FRONTEND=noninteractive so you aren't prompted for any information as the container is building
 
 
 Generic Command:
