@@ -1,13 +1,15 @@
 # Spark-Demo
 Container Image Setup 
 
-(This step is the same as above) Download Apache Spark - I used version 3.3.2
+Download Apache Spark - I used version 3.3.2 - https://archive.apache.org/dist/spark/spark-3.3.2/
 
 Apache Download Mirrors - or visit the downloads page here Downloads | Apache Spark 
 
 untar the file into a directory called spark 
 
 Downloaded the rapids accelerator for apache spark: Download - I downloaded version 23.06.0
+
+https://nvidia.github.io/spark-rapids/docs/download.html#download-v23060
 
 Download the GPU discovery script 
 
