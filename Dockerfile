@@ -10,6 +10,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends openjdk-8-jdk o
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64
 ENV PATH $PATH:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/bin:/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin
 
+# Install pyspark and vim, and clean up any unnecessary files
+RUN apt-get update && apt-get install -y --no-install-recommends vim \
+    && pip install --no-cache-dir pyspark==3.3.2 torch transformers datasets \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Before building the docker image, first either download Apache Spark 3.1+ from
 # http://spark.apache.org/downloads.html or build and make a Spark distribution following the
 # instructions in http://spark.apache.org/docs/3.1.2/building-spark.html (see
